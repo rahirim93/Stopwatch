@@ -1,13 +1,12 @@
 package com.example.stopwatch;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Locale;
 
@@ -20,23 +19,30 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        if (savedInstanceState != null){
+            seconds = savedInstanceState.getInt("seconds");
+            running = savedInstanceState.getBoolean("running");
+        }
         runTimer();
+    }
+    @Override
+    public void onSaveInstanceState (Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putInt("seconds", seconds);
+        savedInstanceState.putBoolean("running", running);
     }
 
     public void onClickStart (View view){
         running = true;
-
     }
 
     public void onClickStop (View view){
         running = false;
-
     }
 
     public void onClickReset (View view){
         running = false;
         seconds = 0;
-
     }
 
     private void runTimer (){
@@ -59,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void toSecAct(View view) {
+    public void onClickHandAct(View view){
         Intent intent = new Intent(this, SecAct.class);
         startActivity(intent);
     }
